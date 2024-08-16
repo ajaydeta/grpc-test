@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+option go_package = "tablelink/proto/pb";
+
+package proto;
+
+message User {
+  int64 role_id = 1;
+  string role_name = 2;
+  string name = 3;
+  string email = 4;
+  string last_access = 5;
+}
+
+message GetUserRequest {
+  int64 id = 1;
+}
+
+message CreateUserRequest {
+  int64 role_id = 1;
+  string name = 2;
+  string email = 3;
+  string password = 4;
+}
+
+message UpdateUserRequest {
+  int64 id = 1;
+  string name = 2;
+}
+
+message DeleteUserRequest {
+  int64 id = 1;
+}
+
+message SuccessStatusResponse {
+  bool status = 1;
+  string message = 2;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string access_token = 1;
+}
+
+service UserService {
+  rpc Login(LoginRequest) returns (LoginResponse) {}
+  rpc GetUser(GetUserRequest) returns (User) {}
+  rpc CreateUser(CreateUserRequest) returns (SuccessStatusResponse) {}
+  rpc UpdateUser(UpdateUserRequest) returns (SuccessStatusResponse) {}
+  rpc DeleteUser(DeleteUserRequest) returns (SuccessStatusResponse) {}
+}
